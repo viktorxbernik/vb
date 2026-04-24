@@ -2,43 +2,91 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>moja stran</title>
+  <title>canvas</title>
+
   <style>
     body {
-      background: white;
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      max-width: 900px;
+      margin: 0;
+      background: #f5f2ea;
+      overflow: hidden;
     }
 
     .item {
-      margin-bottom: 60px;
+      position: absolute;
+      cursor: grab;
     }
 
     img {
-      max-width: 100%;
-      display: block;
-      margin-bottom: 10px;
+      max-width: 200px;
+      user-select: none;
+      pointer-events: none;
     }
 
     .text {
-      font-size: 16px;
-      line-height: 1.4;
+      font-size: 14px;
+      margin-top: 5px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="item">
+  <div class="item" id="item1" style="top:100px; left:100px;">
     <img src="slika1.jpg">
-    <div class="text">tekst ob sliki</div>
+    <div class="text">tekst 1</div>
   </div>
 
-  <div class="item">
+  <div class="item" id="item2" style="top:300px; left:200px;">
     <img src="slika2.jpg">
-    <div class="text">drug zapis</div>
+    <div class="text">tekst 2</div>
   </div>
+
+  <script>
+    const items = document.querySelectorAll(".item");
+
+    // 🔄 load saved positions
+    items.forEach(item => {
+      const saved = localStorage.getItem(item.id);
+      if (saved) {
+        const pos = JSON.parse(saved);
+        item.style.left = pos.left + "px";
+        item.style.top = pos.top + "px";
+      }
+    });
+
+    // 🖱️ drag + save
+    items.forEach(item => {
+      let offsetX, offsetY, isDown = false;
+
+      item.addEventListener("mousedown", (e) => {
+        isDown = true;
+        offsetX = e.clientX - item.offsetLeft;
+        offsetY = e.clientY - item.offsetTop;
+        item.style.cursor = "grabbing";
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDown = false;
+        item.style.cursor = "grab";
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+
+        item.style.left = x + "px";
+        item.style.top = y + "px";
+
+        // 💾 save position
+        localStorage.setItem(item.id, JSON.stringify({
+          left: x,
+          top: y
+        }));
+      });
+    });
+  </script>
 
 </body>
 </html>
