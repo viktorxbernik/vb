@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>moja stran</title>
+  <style>
+    body {
+      background: white;
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      max-width: 900px;
+    }
+
+    .item {
+      margin-bottom: 60px;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="item">
+    <img src="slika1.jpg">
+    <div class="text">tekst ob sliki</div>
+  </div>
+
+  <div class="item">
+    <img src="slika2.jpg">
+    <div class="text">drug zapis</div>
+  </div>
+
+</body>
+</html>
