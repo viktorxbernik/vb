@@ -2,13 +2,17 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>canvas</title>
+  <title>neskončen papir</title>
 
   <style>
     body {
       margin: 0;
-      background: #f5f2ea;
-      overflow: hidden;
+      background: white;
+      overflow: scroll;
+      width: 5000px;
+      height: 5000px;
+      position: relative;
+      font-family: Arial, sans-serif;
     }
 
     .item {
@@ -17,44 +21,38 @@
     }
 
     img {
-      max-width: 200px;
+      max-width: 220px;
       user-select: none;
       pointer-events: none;
+      display: block;
     }
 
     .text {
       font-size: 14px;
-      margin-top: 5px;
+      margin-top: 4px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="item" id="item1" style="top:100px; left:100px;">
-    <img src="slika1.jpg">
+  <div class="item" id="item1" style="top:200px; left:200px;">
+    <a href="slika1.jpg" target="_blank">
+      <img src="slika1.jpg">
+    </a>
     <div class="text">tekst 1</div>
   </div>
 
-  <div class="item" id="item2" style="top:300px; left:200px;">
-    <img src="slika2.jpg">
+  <div class="item" id="item2" style="top:600px; left:500px;">
+    <a href="slika2.jpg" target="_blank">
+      <img src="slika2.jpg">
+    </a>
     <div class="text">tekst 2</div>
   </div>
 
   <script>
     const items = document.querySelectorAll(".item");
 
-    // 🔄 load saved positions
-    items.forEach(item => {
-      const saved = localStorage.getItem(item.id);
-      if (saved) {
-        const pos = JSON.parse(saved);
-        item.style.left = pos.left + "px";
-        item.style.top = pos.top + "px";
-      }
-    });
-
-    // 🖱️ drag + save
     items.forEach(item => {
       let offsetX, offsetY, isDown = false;
 
@@ -73,20 +71,12 @@
       document.addEventListener("mousemove", (e) => {
         if (!isDown) return;
 
-        const x = e.clientX - offsetX;
-        const y = e.clientY - offsetY;
-
-        item.style.left = x + "px";
-        item.style.top = y + "px";
-
-        // 💾 save position
-        localStorage.setItem(item.id, JSON.stringify({
-          left: x,
-          top: y
-        }));
+        item.style.left = (e.clientX - offsetX) + "px";
+        item.style.top = (e.clientY - offsetY) + "px";
       });
     });
   </script>
 
 </body>
+</html>
 </html>
